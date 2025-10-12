@@ -22,3 +22,5 @@ print(x.r, x.i)
 print(y.r, y.i)
 
 print(f"print value x.r:{x.r}, y.r:{y.r}")
+x.print()
+y.print()
