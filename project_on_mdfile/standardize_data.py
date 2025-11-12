@@ -15,11 +15,33 @@ def standardize_data(input_data):
     if isinstance(input_data, dict):
         # dict → 提取values并转换为2D数组（每个value是一个特征的所有样本）
         data = np.array(list(input_data.values())).T  # 转置后为 (样本数, 特征数)
+
+    # input_data = {"height": [160, 170, 180], "weight": [50, 60, 70]}  # 2个特征，3个样本
+    # print(input_data.values())  # 输出：dict_values([[160, 170, 180], [50, 60, 70]])
+    # print(list(input_data.values()))  # 输出：[[160, 170, 180], [50, 60, 70]]  # 列表类型，长度=特征数（2）
+    # temp = np.array(list(input_data.values()))
+    # print(temp.shape)  # 输出：(2, 3)
+    # print(temp)
+    # 输出：
+    # [[160 170 180]  # 第一行：height特征的3个样本
+    #  [ 50  60  70]]  # 第二行：weight特征的3个样本
+    # data = temp.T
+    # print(data.shape)  # 输出：(3, 2)
+    # print(data)
+    # 输出：
+    # [[160  50]  # 第一行：第一个样本（height=160, weight=50）
+    #  [170  60]  # 第二行：第二个样本
+    #  [180  70]]  # 第三行：第三个样本
+
     elif isinstance(input_data, list):
         # list → 转换为numpy数组，确保是2D（避免一维数组处理出错）
         data = np.array(input_data)
         if data.ndim == 1:  # 一维列表（单特征）→ 扩展为2D
             data = data.reshape(-1, 1)
+    elif isinstance(input_data, np.ndarray):
+        # numpy数组 → 直接使用（确保已为2D）
+        data = input_data
+        if data.ndim == 1: data = data.reshape(-1, 1)
     else:
         raise TypeError("输入仅支持list或dict类型")
 
@@ -42,7 +64,7 @@ if __name__ == "__main__":
     print("测试1（list单特征）：")
     print(f"原始数据：{list_input1}")
     print(f"标准化后：\n{result1.round(4)}")
-    print(f"标准化后均值：{np.mean(result1).round(4)}（应接近0）")
+    print(f"标准化后均值：{np.mean(result1).round(4)}（应接近0）") # round将结果四舍五入到4位小数
     print(f"标准化后方差：{np.var(result1).round(4)}（应接近1）\n")
 
     # 测试2：输入list（多特征）
@@ -60,3 +82,11 @@ if __name__ == "__main__":
     print("测试3（dict多特征）：")
     print(f"原始数据：{dict_input}")
     print(f"标准化后：\n{result3.round(4)}")
+
+    np_input = np.array(list_input1)
+    result4 = standardize_data(np_input)
+    print("测试4（np.ndarray单特征）：")
+    print(f"原始数据：{np_input}")
+    print(f"标准化后：\n{result4.round(4)}")
+    print(f"标准化后均值：{np.mean(result4).round(4)}（应接近0）") # round将结果四舍五入到4位小数
+    print(f"标准化后方差：{np.var(result4).round(4)}（应接近1）\n")
