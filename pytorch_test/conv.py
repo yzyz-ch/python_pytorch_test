@@ -20,7 +20,7 @@ class convNet(nn.Module):
 
 tudui = convNet()
 
-writer = SummaryWriter('conv')
+writer = SummaryWriter('logs/conv')
 
 step = 0
 for data in dataloader:

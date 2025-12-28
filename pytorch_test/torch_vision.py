@@ -23,7 +23,7 @@ print(test_set.classes[target])
 # img.show()
 
 
-writer = SummaryWriter("p10")
+writer = SummaryWriter("logs/p10")
 for i in range(10):
     img, target = test_set[i]
     writer.add_images("test_set", img, i)

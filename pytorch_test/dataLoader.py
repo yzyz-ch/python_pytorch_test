@@ -7,7 +7,7 @@ test_data = torchvision.datasets.CIFAR10(root='./dataset', train=False, download
 test_loader = DataLoader(dataset=test_data, batch_size=64, shuffle=True, num_workers=0, drop_last=False)
 
 
-writer = SummaryWriter(log_dir='dataloader')
+writer = SummaryWriter(log_dir='logs/dataloader')
 # 测试数据集中的第一张图片及标签
 img, target = test_data[0]
 print(img.shape)
